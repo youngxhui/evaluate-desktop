@@ -95,7 +95,8 @@
             user() {
                 return JSON.parse(window.localStorage.getItem("user") || "[]")
             }
-        }
+        },
+        
     }
 </script>
 

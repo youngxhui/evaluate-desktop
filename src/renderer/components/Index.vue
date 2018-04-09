@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-            <el-menu-item index="1">张三</el-menu-item>
+            <el-menu-item index="1">{{username}}</el-menu-item>
         </el-menu>
 
 
@@ -106,63 +106,71 @@
 </template>
 
 <script>
-    export default {
-        name: "Index",
-        data() {
-            return {
-                select: '',
-                username: '张三',
-                activeIndex: '1',
-                tableData: [{
-                    id: '1',
-                    class: '15140Y01',
-                    statue: '已经结束',
-                    start_time: '2018年4月2日 21点03分',
-                    end_time: '2018年4月2日 21点03分',
-                    commit: "12/50"
-                }, {
-                    id: '2',
-                    class: '15140Y01',
-                    statue: '进行中',
-                    start_time: '2018年4月2日 21点03分',
-                    end_time: '2018年4月2日 21点03分',
-                    commit: "48/50"
-                }, {
-                    id: '3',
-                    class: '15140Y02',
-                    statue: '已经结束',
-                    start_time: '2018年4月2日 21点03分',
-                    end_time: '2018年4月2日 21点03分',
-                    commit: "34/ 52"
-                }],
-                search_text: ''
-            }
+export default {
+  name: "Index",
+  data() {
+    return {
+      select: "",
+      username: JSON.parse(window.localStorage.getItem("user")).name,
+      activeIndex: "1",
+      tableData: [
+        {
+          id: "1",
+          class: "15140Y01",
+          statue: "已经结束",
+          start_time: "2018年4月2日 21点03分",
+          end_time: "2018年4月2日 21点03分",
+          commit: "12/50"
         },
-        methods: {
-            handleSelect(key, keyPath) {
-                console.log(key, keyPath)
-            },
-
-            // 编辑按键
-            handleClick(row) {
-                console.log(row.id);
-                this.$router.push()
-            },
-            // 添加作业
-            addHomework: function () {
-                this.$router.push("/addhomework")
-            }
+        {
+          id: "2",
+          class: "15140Y01",
+          statue: "进行中",
+          start_time: "2018年4月2日 21点03分",
+          end_time: "2018年4月2日 21点03分",
+          commit: "48/50"
+        },
+        {
+          id: "3",
+          class: "15140Y02",
+          statue: "已经结束",
+          start_time: "2018年4月2日 21点03分",
+          end_time: "2018年4月2日 21点03分",
+          commit: "34/ 52"
         }
+      ],
+      search_text: ""
+    };
+  },
+  methods: {
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
+
+    // 编辑按键
+    handleClick(row) {
+      console.log(row.id);
+      this.$router.push();
+    },
+    // 添加作业
+    addHomework: function() {
+      this.$router.push("/addPage");
     }
+  },
+  computed: {
+    user() {
+      return JSON.parse(window.localStorage.getItem("user"));
+    }
+  }
+};
 </script>
 
 <style scoped>
+.class-table {
+  margin-top: 30px;
+}
 
-    .class-table {
-        margin-top: 30px;
-    }
-
-    .add-homework-btn {
-        margin: 15px;
-    }
+.add-homework-btn {
+  margin: 15px;
+}
 </style>
