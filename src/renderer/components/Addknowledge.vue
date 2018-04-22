@@ -23,10 +23,11 @@ export default {
   data() {
     return {
       pageId: 0,
+      checkList: [],
       activeIndex: "1",
       courseId: 0,
       courses: [],
-      konwledgeIds: []
+      knowledgeIds: []
     };
   },
   methods: {
@@ -39,7 +40,7 @@ export default {
       this.$http
         .get("/teacher/getKnowledgeById", {
           params: {
-            courseId: this.courseId
+            courseId: this.$route.query.courseId
           }
         })
         .then(res => {
@@ -51,33 +52,32 @@ export default {
       //this.$router.push("/addPage");
     },
     getKnowledgeId(value) {
-      var index = this.konwledgeIds.findIndex(v => {
+      var index = this.knowledgeIds.findIndex(v => {
         return v == value;
       });
       if (index == -1) {
-        this.konwledgeIds.push(value);
+        this.knowledgeIds.push(value);
       } else {
-        this.konwledgeIds.splice(
-          this.konwledgeIds.findIndex(item => item === value),
+        this.knowledgeIds.splice(
+          this.knowledgeIds.findIndex(item => item === value),
           1
         );
       }
     },
-    next:function(){
-      if(this.konwledgeIds.length == 0) {
-        return
+    next() {
+      if (this.knowledgeIds.length == 0) {
+        return;
       }
-      
-      this.$route.push({
-        path: "",
+      this.$router.push({
+        path: "/addTitleForPage",
         query: {
-          'konwledgeIds':this.konwledgeIds
+          knowledgeIds: this.knowledgeIds,
+          pageId: this.pageId
         }
-      })
+      });
     }
   },
   created() {
-    console.log("created");
     this.getParams();
     this.getKnowledge();
   }

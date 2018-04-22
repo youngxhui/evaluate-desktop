@@ -7,6 +7,8 @@ import AddTitle from '@/components/AddTitle'
 import AddPage from '@/components/AddPage'
 import AddTitleForPage from '@/components/AddTitleForPage'
 import AddKnowledge from '@/components/AddKnowledge'
+import Chart from '@/components/Chart'
+import StudentMenu from '@/components/StudentMenu'
 
 Vue.use(Router)
 
@@ -46,6 +48,14 @@ export default new Router({
             path: '/addknowledge',
             name: 'addKnowledge',
             component: AddKnowledge
+        }, {
+            path: '/chart',
+            name: 'chart',
+            component: Chart
+        }, {
+            path: '/studentMenu',
+            name: 'studentMenu',
+            component: StudentMenu
         }
     ]
 })

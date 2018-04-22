@@ -137,7 +137,7 @@ export default {
       this.$http
         .get("/teacher/getCourseByTeacherId", {
           params: {
-            teacherId: "1"
+            teacherId: JSON.parse(window.localStorage.getItem("user")).id
           }
         })
         .then(res => {
@@ -174,9 +174,6 @@ export default {
           if (res.data.code == 200) {
             var pageId = res.data.data.id;
             var courseId = this.courseId;
-            console.log(pageId);
-            console.log(courseId);
-            
             this.$router.push({
               path: "/addknowledge",
               query: { 'pageId': pageId, 'courseId': courseId }

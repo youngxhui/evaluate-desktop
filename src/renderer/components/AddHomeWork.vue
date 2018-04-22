@@ -215,8 +215,7 @@ export default {
       this.isIndeterminate = false;
     },
     handleCheckedCitiesChange(value) {
-      console.log("value is " + value.length);
-      console.log("value is ", value);
+      
     },
     addTitle() {
       console.log("next");

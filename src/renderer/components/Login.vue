@@ -39,83 +39,90 @@
 </template>
 
 <script>
-    import store from "../vuex/store";
+import store from "../vuex/store";
 
-    export default {
-        name: "Login",
-        data() {
-            return {
-                labelPosition: 'right',
-                number: '',
-                password: ''
-
+export default {
+  name: "Login",
+  data() {
+    return {
+      labelPosition: "right",
+      number: "",
+      password: ""
+    };
+  },
+  methods: {
+    login: function() {
+      if (this.user.number === "" && this.user.password === "") {
+        // 提示账号错误
+        this.$message({
+          message: "账号或密码不能为空！",
+          type: "warning"
+        });
+        return;
+      } else {
+        this.$http
+          .post(
+            "user/teacher/login",
+            {
+              username: this.number,
+              password: this.password
+            },
+            { emulateJSON: true }
+          )
+          .then(res => {
+            console.log(res);
+            // 存储信息
+            if (res.data.code === 200) {
+              window.localStorage.setItem(
+                "user",
+                JSON.stringify(res.data.data)
+              );
             }
-        },
-        methods: {
-            login: function () {
-                if (this.user.number === '' && this.user.password === '') {
-                    // 提示账号错误
-                    this.$message({
-                        message: '账号或密码不能为空！',
-                        type: 'warning'
-                    });
-                    return;
-                } else {
-                    this.$http.post('user/teacher/login', {
-                            username: this.number,
-                            password: this.password
-                        },
-                        {emulateJSON: true}).then(res => {
-                        console.log(res);
-                        // 存储信息
-                        if (res.data.code === 200) {
-                            window.localStorage.setItem(
-                                "user",
-                                JSON.stringify(res.data.data)
-                            )
-                        }
-                        store.dispatch("login");
-                        this.$message('登录成功');
-                        this.$router.push('index')
-                    }).catch(err => {
-                        console.log(err)
-                        this.$message({
-                            message: '账号或密码不正确！',
-                            type: 'warning'
-                        });
-                    })
-                }
+            store.dispatch("login");
+            this.$message("登录成功");
+            this.$router.push("index");
+          })
+          .catch(err => {
+            console.log(err);
+            this.$message({
+              message: "账号或密码不正确！",
+              type: "warning"
+            });
+          });
+      }
 
-                // axios
-
-
-            }
-        },
-        computed: {
-            user() {
-                return JSON.parse(window.localStorage.getItem("user") || "[]")
-            }
-        },
-        
+      // axios
     }
+  },
+  computed: {
+    user() {
+      return JSON.parse(window.localStorage.getItem("user") || "[]");
+    }
+  },
+  created() {
+    if (JSON.parse(window.localStorage.getItem("user")).id != null) {
+      this.$router.push({
+        path: "/index"
+      });
+    }
+  }
+};
 </script>
 
 <style scoped>
-    .login-text {
-        font-size: 20px;
-        text-align: center;
-        margin-top: 50px;
-        margin-bottom: 20px;
-    }
+.login-text {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
 
-    .page-font {
-        font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+.page-font {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
 
-    }
-
-    .login-btn {
-        width: 100%;
-    }
-
-
+.login-btn {
+  width: 100%;
+}
 </style>
