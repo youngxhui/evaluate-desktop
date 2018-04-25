@@ -24,14 +24,14 @@
 
       <!-- 时间 -->
       <div class="block">
-        <span class="demonstration">默认</span>
+        <!-- <span class="demonstration">默认</span> -->
         <el-date-picker v-model="value4" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
         </el-date-picker>
       </div>
 
       <!-- 试卷选择 -->
       <!-- <div>试卷</div> -->
-      
+
       <div class="page-choice">
         <el-select v-model="pageId" placeholder="请选择试卷编号">
           <el-option v-for="page in pages" :key="page" :label="page.id" :value="page.id">
@@ -49,7 +49,7 @@
       </el-checkbox-group>
 
       <div class="btn-next">
-        <el-button type="success" @click="nextStep">下一步</el-button>
+        <el-button type="success" @click="nextStep">完成</el-button>
       </div>
     </div>
   </div>
@@ -85,7 +85,7 @@ export default {
       titles: [],
       checkList: [],
       pages: [],
-      pageId: [],
+      pageId: "",
       pageIdAndTitle: {},
       classList: [],
       classes: [],
@@ -125,6 +125,7 @@ export default {
         .then(titleRes => {
           console.log("title", titleRes);
           this.titles = titleRes.data.data;
+          this.getPage();
         })
         .catch(err => {
           console.log(err);
@@ -140,6 +141,7 @@ export default {
         })
         .then(clazz => {
           this.classes = clazz.data.data;
+          this.getTitle();
           console.log("classes", this.classes);
         })
         .catch(err => {
@@ -149,6 +151,7 @@ export default {
 
     getParams() {
       this.knowledgeIds = this.$route.query.knowledgeIds;
+      this.getClass();
     },
     nextStep: function() {
       // 验证
@@ -159,7 +162,6 @@ export default {
         this.$message.error("您还没有选择试卷");
         return;
       }
-
       // 提交
       this.$http
         .post(
@@ -178,7 +180,7 @@ export default {
               .post(
                 "/teacher/startTest",
                 {
-                  pageId: this.pageId,
+                  pagesId: this.pageId,
                   classId: 1,
                   startTime: this.value4[0],
                   endTime: this.value4[1],
@@ -190,15 +192,12 @@ export default {
                 }
               )
               .then(res => {
+                this.$router.push("/index");
                 console.log("res", res);
               })
               .catch(err => {
                 console.log("err", err);
               });
-
-            this.$router.push({
-              path: ""
-            });
           }
         })
         .catch(err => {
@@ -208,9 +207,9 @@ export default {
   },
   created() {
     this.getParams();
-    this.getClass();
-    this.getTitle();
-    this.getPage();
+    // this.getClass();
+    // this.getTitle();
+    // this.getPage();
   },
 
   computed: {

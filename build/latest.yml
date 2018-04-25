@@ -1,0 +1,9 @@
+version: 0.0.0
+files:
+  - url: my-project-setup-0.0.0.exe
+    sha512: NlJhO8IqYLLJp1wtDL3pjHp7CTkdYFXDjSehTveXoGBKWiHsGH9GwP4wFI7QuhjREeZZo25oQ7AsrUwbOjEjPw==
+    size: 44724433
+path: my-project-setup-0.0.0.exe
+sha512: NlJhO8IqYLLJp1wtDL3pjHp7CTkdYFXDjSehTveXoGBKWiHsGH9GwP4wFI7QuhjREeZZo25oQ7AsrUwbOjEjPw==
+sha2: a0d056aa47528a645e8b6d1bcfde0220ce6edad103946a86f64525e851ce87a2
+releaseDate: '2018-04-23T00:14:57.534Z'
